@@ -24,6 +24,8 @@ counter=0
 
 #unzip "$inputZipName.zip"
 
+echo "student_id,score" > "${inputZipName}/output.csv"
+
 for (( c=$initialRoll; c<=$initialRoll+$rollCount-1; c++ ))
 do
     if [ -f "${inputZipName}/Submissions/${c}/${c}.sh" ]; then
@@ -42,9 +44,31 @@ do
             let "marks[counter]=0"
         fi  
         rm -rf tmpOutput.txt
+
+
+        for (( d=$initialRoll; d<=$initialRoll+$rollCount-1; d++ ))
+        do
+            if (( c != d ))
+            then
+                if [ -f "${inputZipName}/Submissions/${d}/${d}.sh" ]; 
+                then
+                    copyDiffResult=`diff -Z -B "${inputZipName}/Submissions/${c}/${c}.sh" "${inputZipName}/Submissions/${d}/${d}.sh"`
+                    if [ "$copyDiffResult" == "" ] 
+                    then
+                        let "marks[counter]=-marks[counter]"
+                        break
+                    fi
+                fi                
+            fi
+        done
+
+
     else 
         marks[$counter]=0
     fi
+
+
+    echo "${c},${marks[$counter]}" >> "${inputZipName}/output.csv"
     let "counter+=1" 
 done
 
