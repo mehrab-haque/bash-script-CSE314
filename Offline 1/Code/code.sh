@@ -17,12 +17,10 @@ else
     rollCount=5
 fi
 
-
-
 declare -a marks
 counter=0
 
-#unzip "$inputZipName.zip"
+unzip "$inputZipName.zip"
 
 echo "student_id,score" > "${inputZipName}/output.csv"
 
@@ -73,17 +71,8 @@ do
 done
 
 
-#print marks in shell
-echo ${marks[*]}
+##print marks in shell
+#echo ${marks[*]}
 
-# for f in ${inputZipName}/Submissions/*; do
-#     if [ -d "$f" ]; then
-#         folders=(${f//'/'/ })
-#         studendId=${folders[2]}
-#         shellLoc="${inputZipName}/Submissions/${folders[2]}/${studendId}.sh"
-#         bash $shellLoc
-#         # $f is a directory
-#     fi
-# done
 
 #rm -rf $inputZipName
