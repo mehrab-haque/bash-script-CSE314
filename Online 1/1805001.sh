@@ -11,5 +11,5 @@ do
         lastLine="$line"
     done < "$i"
     mkdir -p "$secondToLastLine"
-    cp "$i" "$secondToLastLine"
+    mv "$i" "$secondToLastLine"
 done
